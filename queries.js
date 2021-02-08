@@ -33,44 +33,43 @@ const getUserById = (req, res) => {
         });
   }
 
-//POST USER
+//POST USER 
   const createUser = (req, res) => {
-    const { name, email } = req.body
-  
-    pool.query(`INSERT INTO users (name, email) VALUES (${name}, ${email})`, (error, results) => {
-      if (error) {
-        throw error
-      }
-      res.status(201).send(`User added with ID: ${result.insertId}`)
-    })
+    var name = req.query.name;
+    var email = req.query.email;
+    var sql = `INSERT INTO users (name,email) VALUES ('${name}', '${email}')`;
+        db.query(sql, function (err, result) {
+          if (err) throw err;
+          console.log("1 record inserted!");
+          res.status(200).send(`Insert new user on ID:${result['insertId']}`)
+        });
+        
   }
 
 //PUT USER
 const updateUser = (req, res) => {
     const id = parseInt(req.params.id)
-    const { name, email } = req.body
-  
-    pool.query(
-      `UPDATE users SET name = ${name}, email = ${email} WHERE id = ${id}`,
-      (error, results) => {
-        if (error) {
-          throw error
-        }
-        res.status(200).send(`User modified with ID: ${id}`)
-      }
-    )
+    var name = req.query.name
+    var email = req.query.email
+    var sql = `UPDATE users SET name = '${name}', email = '${email}' WHERE id = ${id}`;
+        db.query(sql, function (err, result) {
+          if (err) throw err;
+          console.log("1 record update!");
+          res.status(200).send(result)
+        });
+        
   }
 
   //DELETE user
   const deleteUser = (req, res) => {
     const id = parseInt(req.params.id)
   
-    pool.query(`DELETE FROM users WHERE id = ${id}`, (error, results) => {
-      if (error) {
-        throw error
-      }
-      res.status(200).send(`User deleted with ID: ${id}`)
-    })
+    var sql = `DELETE FROM users WHERE id = '${id}'`;
+        db.query(sql, function (err, result) {
+          if (err) throw err;
+          console.log("1 record deleted!");
+          res.status(200).send(result)
+        });
   }
 
 module.exports ={
