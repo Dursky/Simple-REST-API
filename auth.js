@@ -2,43 +2,32 @@
 Authorization file for get data from database.
 */
 const jwt = require('./server');
+const cjwt = require('njwt')
 
-const accessTokenSecret = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG4iLCJwYXNzd29yZCI6InBhc3N3b3JkMTIzIn0.uhNObRGYF8kmqfTXF38wMz5lL4op8EWDkh0wD_jRnhY';
-const users = [
-    {
-      username: 'Andrzej',
-      password: 'zakop',
-      role: 'admin'
-    } ,{
-        username: 'Jan',
-        password: 'kowal99',
-        role: 'member'
-    },{
-        username: "john",
-        password: "password123",
-        role: "admin"
-    }
-];
+//Example token for "Andrzej","zakop"
+//eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6IkFuZHJ6ZWoiLCJwYXNzd29yZCI6Inpha29wIiwianRpIjoiMGVlMGIyYjEtMWQ1NC00ODJhLTg3ODctMWJjOGRmN2NmMGEwIiwiaWF0IjoxNjEyOTAzOTQ0LCJleHAiOjE2MTI5MDQwMDR9.lN7dY2BI8raWFyPFFcf2CkEF1oWNRno6araGyWi15uU
 
-const login = (req, res) => {
-    var username = req.query.username
-    var password = req.query.password
-    const user = users.find(u => { return u.username === username && u.password === password });
-    //If the given user for example - "Andrzej"
-    if (user) {
-        // Generate an access token
-        const accessToken = jwt.sign({ username: user.username,  role: user.role }, accessTokenSecret);
-        //Send responde with access token
-        res.json({
-            accessToken
-        });
-        //Otherwise send this message
-    }else{
-        res.send('Username or password incorrect');
-    }
+const createToken = (req, res) => {
+    var username = req.query.username;
+    var password = req.query.password;
     
+    const claims = { username: username, password: password}//Data to save in token
+    const token = cjwt.create(claims, 'top-secret-phrase')
+    token.setExpiration(new Date().getTime() + 60*1000)//Expiration for 1 minute
+    res.send(token.compact())//Send this token back to client side
+}
 
+const verifyToken=(res,req) => {
+    const { token } = req.params.token
+    jwt.verify(token, 'top-secret-phrase', (err, verifiedJwt) => {
+    if(err){
+      res.send(err.message)
+    }else{
+      res.send(verifiedJwt)
+    }
+  })
 }
 module.exports ={
-    login
+    createToken,
+    verifyToken
 }
