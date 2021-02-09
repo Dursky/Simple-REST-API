@@ -1,6 +1,5 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const jwt = require('jsonwebtoken');
 
 const app = express()
 const db = require('./queries')
@@ -28,7 +27,8 @@ app.delete('/users/:id', db.deleteUser)
 
 //Use API for authorization
 app.post("/create",auth.createToken)
-app.get("/verify/:token",auth.verifyToken)
+app.post("/verify/:token",auth.verifyToken)
+
 app.listen(port, () => {
     console.log(`Run at 127.0.0.1:${port}.`)
 })
