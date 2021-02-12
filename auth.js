@@ -11,19 +11,18 @@ const createToken = (req, res) => {
     const token = cjwt.create(claims, 'top-secret-phrase')
     token.setExpiration(new Date().getTime() + 60*1000)//Expiration for 1 minute
     var generateToken = token.compact();
-    res.send(generateToken)//Send this token back to client side
     if(generateToken.length > 0){
       req.flash('Token',generateToken)
-      //res.redirect('/verify')
+      res.redirect('/verify')
     }else{
       res.send("Problem creating token - check login details")
     }
-   
 }
-//Check for what first res or req 
+//Usefull for create single time use token
 const verifyToken = (req,res) => {
-    var token = req.flash('Token');
 
+    var token = req.flash('Token')[0];
+    console.log(token)
     jwt.verify(token, 'top-secret-phrase', (err, verifiedJwt) => {
     if(err){
       res.send(err.message)
@@ -40,7 +39,6 @@ const login = (req, res) => {
     req.flash('passUser',[user,pass]);
   }
   res.redirect('/create')
-  //console.log(req.flash('passUser')[0].length)
 }
 module.exports ={
     createToken,
