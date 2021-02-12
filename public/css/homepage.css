@@ -1,0 +1,16 @@
+@font-face {
+    font-family: "SilkFont";
+    src: url("slkscr.ttf");
+    src: url("slkscreb.ttf");
+    }
+
+body{
+    background-color: #ffd7ba;
+    color:white;
+    font-family: 'SilkFont';
+}
+
+#main{background-color: #f8edeb;border: 2px solid #264653;margin: 0 auto;width: 10em;text-align:center;position:relative;top:50%;}
+input{margin: 0 auto;text-align: center; font-family: 'SilkFont';width: 10em;}
+button[name="submit"]{position: relative; border:none;background-color: #023047;color:whitesmoke; font-family: 'SilkFont';}
+p{color:black;font-size: 20px;margin-bottom:0px;}

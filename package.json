@@ -9,8 +9,11 @@
   "author": "Michał Durski",
   "license": "MIT",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "jsonwebtoken": "^8.5.1",
-    "njwt": "^1.0.0"
+    "njwt": "^1.0.0",
+    "pug": "^3.0.0"
   }
 }

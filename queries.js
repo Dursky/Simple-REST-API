@@ -13,7 +13,7 @@ DELETE — /users/:id | deleteUser()
 */
 
 //GET all USERS
-const getUsers = (req, res) => {
+  const getUsers = (req, res) => {
         var sql = "SELECT * FROM users ORDER BY id ASC";
         db.query(sql, function (err, result) {
           if (err) throw err;
@@ -23,7 +23,7 @@ const getUsers = (req, res) => {
   }
 
 //GET USER by id 
-const getUserById = (req, res) => {
+  const getUserById = (req, res) => {
     const id = parseInt(req.params.id)
     var sql = `SELECT * FROM users WHERE id = ${id}`;
         db.query(sql, function (err, result) {
@@ -43,11 +43,10 @@ const getUserById = (req, res) => {
           console.log("1 record inserted!");
           res.status(200).send(`Insert new user on ID:${result['insertId']}`)
         });
-        
   }
 
 //PUT USER
-const updateUser = (req, res) => {
+  const updateUser = (req, res) => {
     const id = parseInt(req.params.id)
     var name = req.query.name
     var email = req.query.email
@@ -56,8 +55,7 @@ const updateUser = (req, res) => {
           if (err) throw err;
           console.log("1 record update!");
           res.status(200).send(result)
-        });
-        
+        });      
   }
 
   //DELETE user
