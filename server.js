@@ -39,8 +39,8 @@ app.put('/users/:id', db.updateUser)
 app.delete('/users/:id', db.deleteUser)
 
 //Use API for authorization
-app.post("/create",auth.createToken)
-app.post("/verify",auth.verifyToken)
+app.get("/create",auth.createToken)
+app.get("/verify",auth.verifyToken)
 
 app.listen(port, () => {
     console.log(`Run at 127.0.0.1:${port}.`)
