@@ -1,5 +1,5 @@
 const db = require('./config/db-config');
-
+const auth = require('./auth.js')
 
 /*
 List of CRUD methods.In result we create a endpoint
@@ -37,11 +37,12 @@ DELETE — /users/:id | deleteUser()
   const createUser = (req, res) => {
     var name = req.query.name;
     var email = req.query.email;
-    var sql = `INSERT INTO users (name,email) VALUES ('${name}', '${email}')`;
+    const token = auth.generateAccessToken({ username: req.query.name });
+    var sql = `INSERT INTO users (name,email,token) VALUES ('${name}', '${email}','${token}')`;
         db.query(sql, function (err, result) {
           if (err) throw err;
           console.log("1 record inserted!");
-          res.status(200).send(`Insert new user on ID:${result['insertId']}`)
+          res.status(200).send(`Insert new user on ID:${result['insertId']} and token: ${token}`)
         });
   }
 
