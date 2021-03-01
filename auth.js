@@ -4,7 +4,6 @@ Authorization file for get data from database.
 const jwt = require('jsonwebtoken');
 
 
-
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization']
   var user = req.query.name;
